@@ -25,6 +25,8 @@
     "test:crossbrowser": "cross-env NODE_PATH=. NODE_ENV=test codeceptjs run-multiple ${BROWSER_GROUP:-'--all'} -c test/e2e/saucelabs.conf.js --steps --reporter mocha-multi --verbose",
     "test:nsp": "nsp check",
     "test:a11y": "cross-env NODE_PATH=. NODE_ENV=a11y LOG_LEVEL=ERROR mocha test/accessibility/a11y.js --exit --timeout 60000 --reporter mochawesome --reporter-options reportFilename=a11y,inlineAssets=true,reportTitle=submit-your-appeal",
+    "test:stryker": "NODE_PATH=. stryker run ",
+    "test:mutation": "./bin/run-mutation-tests.sh",
     "sonar-scan": "sonar-scanner -Dsonar.projectName='SSCS :: Submit Your Appeal frontend' -Dsonar.projectKey='SSCSSYAF' -Dsonar.sources=. -Dsonar.exclusions=app.js,app-insights.js,server.js,node_modules/**,test/**,assets/**,dist/**,mochawesome-report/** -Dsonar.javascript.lcov.reportPaths=test/unit/coverage/html/lcov.info -Dsonar.cpd.exclusions=steps/**",
     "mock-uploader": "node test/file_acceptor/evidence_uploader.js"
   },
@@ -87,6 +89,12 @@
     "sinon": "^5.0.7",
     "sinon-chai": "^3.0.0",
     "sonar-scanner": "^3.0.3",
+    "stryker": "^0.23.0",
+    "stryker-api": "^0.16.1",
+    "stryker-html-reporter": "^0.13.2",
+    "stryker-javascript-mutator": "^0.6.3",
+    "stryker-mocha-framework": "^0.9.2",
+    "stryker-mocha-runner": "^0.11.2",
     "supertest": "^3.0.0",
     "webdriverio": "^4.13.2"
   }
