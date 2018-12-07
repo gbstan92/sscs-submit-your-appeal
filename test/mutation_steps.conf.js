@@ -36,9 +36,13 @@ const strykerConfiguration = config => {
         'test/unit/steps/reasons-for-appealing/**/*.test.js',
         'test/unit/steps/representative/**/*.test.js',
         'test/unit/steps/session/**/*.test.js',
-        'test/unit/steps/sms-notify/**/*.test.js'
-        // 'test/unit/steps/start/*.test.js'
+        'test/unit/steps/sms-notify/**/*.test.js',
+        // 'test/unit/steps/start/**/*.test.js',
         // 'test/assets/**/*.test.js'
+        // './test/unit/middleware/EvidenceUpload.test.js',
+        // './test/unit/steps.test.js',
+        // './test/unit/paths.test.js',
+        './test/unit/utils/**/*.test.js'
       ],
       timeout: 8000
     },

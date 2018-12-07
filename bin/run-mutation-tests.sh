@@ -3,7 +3,7 @@
 
 echo "start: $(date)"
 
-for file in ./test/e2e/mutation/mutation_*.conf.js
+for file in ./test/mutation_*.conf.js
 do
   echo "file: $file";
   yarn test:stryker $file ;
