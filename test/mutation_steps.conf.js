@@ -13,18 +13,15 @@ const strykerConfiguration = config => {
     coverageAnalysis: 'perTest',
     mutate:
       [
-        'steps/**/*.js'
-        // 'steps/check-your-appeal/*.js',
-        // '!test/unit/steps/check-your-appeal/*.test.js'
+        'steps/**/*.js',
+        'utils/**/*.js'
+        // 'assets/**/*.js'
       ],
-    // files: ['**/*'],
     maxConcurrentTestRunners: 2,
     symlinkNodeModules: false,
     htmlReporter: { baseDir: 'functional-output/mutation-steps' },
     mochaOptions: {
       files: [
-        'test/unit/steps/check-your-appeal/**/*.test.js',
-        'test/unit/steps/compliance/**/*.test.js',
         'test/unit/steps/check-your-appeal/**/*.test.js',
         'test/unit/steps/compliance/**/*.test.js',
         'test/unit/steps/confirmation/**/*.test.js',
@@ -37,12 +34,11 @@ const strykerConfiguration = config => {
         'test/unit/steps/representative/**/*.test.js',
         'test/unit/steps/session/**/*.test.js',
         'test/unit/steps/sms-notify/**/*.test.js',
-        // 'test/unit/steps/start/**/*.test.js',
-        // 'test/assets/**/*.test.js'
-        // './test/unit/middleware/EvidenceUpload.test.js',
-        // './test/unit/steps.test.js',
-        // './test/unit/paths.test.js',
-        './test/unit/utils/**/*.test.js'
+        'test/unit/steps/start/**/*.test.js',
+        'test/unit/middleware/EvidenceUpload.test.js',
+        'test/unit/*.test.js',
+        'test/unit/utils/**/*.test.js'
+        // 'test/assets/*.test.js'
       ],
       timeout: 8000
     },
