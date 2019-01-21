@@ -1,7 +1,7 @@
 const { Question, goTo } = require('@hmcts/one-per-page');
 const { form, text } = require('@hmcts/one-per-page/forms');
 const { answer } = require('@hmcts/one-per-page/checkYourAnswers');
-const { postCode, whitelist, phoneNumber } = require('utils/regex');
+const { postCode, whitelist } = require('utils/regex');
 const { Logger } = require('@hmcts/nodejs-logging');
 const sections = require('steps/check-your-appeal/sections');
 const Joi = require('joi');
@@ -13,28 +13,7 @@ const config = require('config');
 
 const usePostcodeChecker = config.get('postcodeChecker.enabled');
 const logger = Logger.getLogger('AppointeeContactDetails.js');
-
-const customJoi = Joi.extend(joi => {
-  return {
-    base: joi.string(),
-    name: 'string',
-    rules: [
-      {
-        name: 'validatePostcode',
-        params: {
-          invalidPostcode: joi.alternatives([joi.boolean().required(), joi.func().ref()])
-        },
-        validate(params, value, state, options) {
-          if (params.invalidPostcode) {
-            return this.createError('string.validatePostcode', { v: value }, state, options);
-          }
-
-          return value;
-        }
-      }
-    ]
-  };
-});
+const customJoi = require('utils/customJoiSchemas');
 
 class AppointeeContactDetails extends Question {
   static get path() {
@@ -77,7 +56,7 @@ class AppointeeContactDetails extends Question {
       ),
       phoneNumber: text.joi(
         fields.phoneNumber.error.invalid,
-        Joi.string().regex(phoneNumber).allow('')
+        customJoi.string().trim().validatePhone()
       ),
       emailAddress: text.joi(
         fields.emailAddress.error.invalid,
