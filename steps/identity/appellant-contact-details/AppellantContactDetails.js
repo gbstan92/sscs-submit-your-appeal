@@ -1,4 +1,4 @@
-const { parsePhoneNumberFromString } = require('libphonenumber-js');
+// const { parsePhoneNumberFromString } = require('libphonenumber-js');
 const { Question, goTo } = require('@hmcts/one-per-page');
 const { form, text } = require('@hmcts/one-per-page/forms');
 const { answer } = require('@hmcts/one-per-page/checkYourAnswers');
@@ -10,49 +10,12 @@ const Joi = require('joi');
 const paths = require('paths');
 const emailOptions = require('utils/emailOptions');
 const userAnswer = require('utils/answer');
+const customJoi = require('utils/customJoiSchemas');
 const postcodeChecker = require('utils/postcodeChecker');
 const config = require('config');
 
 const usePostcodeChecker = config.get('postcodeChecker.enabled');
 const logger = Logger.getLogger('AppellantContactDetails.js');
-
-const customJoi = Joi.extend(joi => {
-  return {
-    base: joi.string(),
-    name: 'string',
-    rules: [
-      {
-        name: 'validatePostcode',
-        params: {
-          invalidPostcode: joi.alternatives([joi.boolean().required(), joi.func().ref()])
-        },
-        validate(params, value, state, options) {
-          if (params.invalidPostcode) {
-            return this.createError('string.validatePostcode', { v: value }, state, options);
-          }
-
-          return value;
-        }
-      },
-      {
-        name: 'validatePhone',
-        validate(params, value, state, options) {
-          const parsedPhoneNumber = parsePhoneNumberFromString(value, 'GB');
-          let isValidPhone = false;
-          if (parsedPhoneNumber && parsedPhoneNumber.isValid) {
-            isValidPhone = parsedPhoneNumber.isValid();
-          }
-
-          if (!isValidPhone) {
-            return this.createError('string.validatePhone', { v: value }, state, options);
-          }
-
-          return value;
-        }
-      }
-    ]
-  };
-});
 
 class AppellantContactDetails extends Question {
   static get path() {
@@ -117,7 +80,6 @@ class AppellantContactDetails extends Question {
       ),
       phoneNumber: text.joi(
         fields.phoneNumber.error[prefix].invalid,
-        // Joi.string().regex(phoneNumber).allow('')
         customJoi.string().trim().validatePhone()
       ),
       emailAddress: text.joi(
