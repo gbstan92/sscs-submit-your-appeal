@@ -1,8 +1,8 @@
 // this is to simulate the upload evidence api. It's not part of the main app.
 
-const logger = require('logger');
+// const logger = require('logger');
 
-const logPath = 'test/index.js';
+// const logPath = 'test/index.js';
 const express = require('express');
 const formidable = require('formidable');
 const http = require('http');
@@ -18,16 +18,16 @@ let server;
 /* eslint-disable consistent-return */
 /* eslint-disable no-magic-numbers */
 
-app.set('port', 3010);
-app.post('/upload', (req, res) => {
+app.set('port', 8080);
+app.post('/evidence/upload', (req, res) => {
   const incoming = new formidable.IncomingForm({
     uploadDir: path.resolve(__dirname, '.'),
     keepExtensions: true,
     type: 'multipart'
   });
 
-  incoming.once('error', er => {
-    logger.trace(`error while receiving the file from the client ${er}`, logPath);
+  incoming.once('error', () => {
+    // logger.trace(`error while receiving the file from the client ${er}`, logPath);
   });
 
   incoming.on('file', (field, file) => {
@@ -35,25 +35,25 @@ app.post('/upload', (req, res) => {
     fs.rename(file.path, pathToFile);
   });
 
-  incoming.on('error', error => {
-    logger.exception(`an error has occured with form upload ${error}`, logPath);
+  incoming.on('error', () => {
+    // logger.exception(`an error has occured with form upload ${error}`, logPath);
     req.resume();
   });
 
   incoming.on('aborted', () => {
-    logger.trace('user aborted upload', logPath);
+    // logger.trace('user aborted upload', logPath);
   });
 
   incoming.on('end', () => {
-    logger.trace('-> upload done', logPath);
+    // logger.trace('-> upload done', logPath);
   });
 
   return incoming.parse(req, (error, fields, files) => {
     if (error) {
-      logger.trace('About to respond with error', logPath);
+      // logger.trace('About to respond with error', logPath);
       return res.send(422, 'Cannot save the uploaded file');
     }
-    logger.trace('About to respond correctly', logPath);
+    // logger.trace('About to respond correctly', logPath);
     return res.json({
       documents: [
         {
