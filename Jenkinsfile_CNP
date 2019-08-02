@@ -41,7 +41,7 @@ withPipeline("nodejs", product, component) {
     try {
       sh 'yarn sonar-scan'
     } catch (error) {
-      echo "ignoring sonar scan in the ithc branch"
+      echo 'ignoring sonar scan in the ithc branch'
     }
   }
 
