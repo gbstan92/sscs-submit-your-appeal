@@ -29,9 +29,13 @@ variable "appinsights_instrumentation_key" {
   default     = ""
 }
 
-variable "idam_login_url" {}
+variable "idam_login_url" {
+  default = ""
+}
 
-variable "idam_api_url" {}
+variable "idam_api_url" {
+  default = ""
+}
 
 variable "services_web_form" {
   default = ""
