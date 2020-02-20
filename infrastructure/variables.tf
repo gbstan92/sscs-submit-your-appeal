@@ -17,7 +17,7 @@ variable "node_environment" {
 }
 
 variable "sya_hostname" {
-  default = "localhost"
+  default = "benefit-appeal.perftest.platform.hmcts.net"
 }
 
 variable "common_tags" {
