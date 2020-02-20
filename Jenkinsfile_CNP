@@ -46,8 +46,13 @@ withPipeline("nodejs", product, component) {
   }
 
   installCharts()
-  // enableAksStagingDeployment()
-  // disableLegacyDeploymentOnAAT()
+  if ("perftest" == env.BRANCH_NAME) {
+      echo 'ASE deployment is OFF'
+      disableLegacyDeployment()
+  } else {
+    enableAksStagingDeployment()
+    disableLegacyDeploymentOnAAT()
+  }   
 
   after("smoketest:preview") {
       stage('Application URLs') {

@@ -40,6 +40,7 @@ module "submit-your-appeal-frontend" {
   asp_rg                          = "${local.app_service_plan}"
   asp_name                        = "${local.app_service_plan}"
   appinsights_instrumentation_key = "${var.appinsights_instrumentation_key}"
+  enable_ase                      = "${var.enable_ase}"
 
 
   app_settings = {

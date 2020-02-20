@@ -67,6 +67,10 @@ variable "services_btn_service_closed" {
   default = ""
 }
 
+variable "enable_ase" {
+  default = false
+}
+
 
 
 
